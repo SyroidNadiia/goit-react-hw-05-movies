@@ -21,23 +21,29 @@ const Reviews = () => {
   }, [movieId]);
 
   return (
-    <ul>
-      {dataReviews.map(review => {
-        return (
-          <li key={review.id}>
-            <img
-              src={`https://image.tmdb.org/t/p/original${review.author_details.avatar_path}`}
-              width="70"
-              height="100"
-              alt={review.author}
-            />
-            <p>{review.author}</p>
-            <p>{review.content}</p>
-            <p>{review.created_at}</p>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      {dataReviews.length > 0 ? (
+        <ul>
+          {dataReviews.map(review => {
+            return (
+              <li key={review.id}>
+                <img
+                  src={`https://image.tmdb.org/t/p/original${review.author_details.avatar_path}`}
+                  width="70"
+                  height="100"
+                  alt={review.author}
+                />
+                <p>{review.author}</p>
+                <p>{review.content}</p>
+                <p>{review.created_at}</p>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p>There are no reviews</p>
+      )}
+    </>
   );
 };
 export default Reviews;

@@ -3,7 +3,7 @@ import Movies from 'pages/Movies';
 import MovieDetails from 'pages/MovieDetails';
 import Cast from './Cast';
 import Reviews from './Reviews';
-import { NavLink, Routes, Route } from 'react-router-dom';
+import { NavLink, Link, Routes, Route } from 'react-router-dom';
 
 const App = () => {
   return (
@@ -22,7 +22,16 @@ const App = () => {
           <Route path="cast" element={<Cast />}></Route>
           <Route path="reviews" element={<Reviews />}></Route>
         </Route>
-        <Route path="*" element={<Home />}>
+        <Route
+          path="*"
+          element={
+            <div>
+              <h1>404 - Page Not Found</h1>
+              <p>The page you are looking for does not exist.</p>
+              <Link to="/">Go to Home Page</Link>
+            </div>
+          }
+        >
           NotFound this page
         </Route>
       </Routes>

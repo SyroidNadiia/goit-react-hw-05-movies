@@ -4,7 +4,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { fetchMovieById } from 'components/api/fetch';
 
 const MovieDetails = () => {
-  const [dataMovie, setDataMovie] = useState([]);
+  const [dataMovie, setDataMovie] = useState({});
 
   const { movieId } = useParams();
 
@@ -17,7 +17,7 @@ const MovieDetails = () => {
         console.log(error);
       }
     };
-    handelFetchMoviesById(movieId);
+    handelFetchMoviesById();
   }, [movieId]);
 
   const {
