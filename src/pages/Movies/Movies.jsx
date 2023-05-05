@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchByQuery } from 'components/api/fetch';
 import SearchBox from 'components/SearchBox';
-import MoviesList from 'components/MoviesList';
+import MoviesList from 'components/MoviesList/MoviesList';
+import { Wrapper } from './Movies.styled';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,7 +14,6 @@ const Movies = () => {
     const handelFetchMoviesByQuery = async () => {
       try {
         const { results } = await fetchByQuery(movieName);
-        console.log(results);
         setResponseMovies(results);
       } catch (error) {
         console.log(error);
@@ -24,17 +24,22 @@ const Movies = () => {
 
   const updateQueryString = event => {
     const value = event.target.value.trim();
-    console.log(value);
+  
     setMovieName(value);
     const nextParams = value !== '' ? { name: value } : {};
     setSearchParams(nextParams);
   };
 
+
+
   return (
-    <>
-      <SearchBox value={movieName} onChange={updateQueryString} />
+    <Wrapper>
+      <SearchBox
+        value={movieName}
+        onChange={updateQueryString}
+      />
       <MoviesList movies={responseMovies} />
-    </>
+    </Wrapper>
   );
 };
 

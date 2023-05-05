@@ -1,7 +1,21 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams, NavLink, Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
 import { fetchMovieById } from 'components/api/fetch';
+import {
+  Main,
+  BackLink,
+  Image,
+  Info,
+  Title,
+  ReleaseDate,
+  Score,
+  Overview,
+  Genres,
+  GenreItem,
+  AdditionalInfo,
+  SubMenu,
+  SubMenuItem,
+} from './MovieDetails.styled';
 
 const MovieDetails = () => {
   const [dataMovie, setDataMovie] = useState({});
@@ -29,42 +43,45 @@ const MovieDetails = () => {
     overview,
     genres,
   } = dataMovie;
-  console.log(dataMovie);
+
+  const location = useLocation();
+  const backLinkHref = location.state?.from || '/';
   return (
-    <main>
-      <img
+    <Main>
+      <BackLink to={backLinkHref}>Go back</BackLink>
+      <Image
         src={`https://image.tmdb.org/t/p/original${poster_path}`}
         width="200"
         height="300"
         alt={original_title}
       />
-      <div>
-        <h2>{title}</h2>
-        <p>{release_date}</p>
-        <p>User Score: {vote_average}</p>
-        <p>Overview: {overview}</p>
+      <Info>
+        <Title>{title}</Title>
+        <ReleaseDate>{release_date}</ReleaseDate>
+        <Score>User Score: {vote_average}</Score>
+        <Overview>Overview: {overview}</Overview>
         {genres && (
-          <ul>
+          <Genres>
             Genres:
             {genres.map(genre => {
-              return <li key={genre.id}>{genre.name}</li>;
+              return <GenreItem key={genre.id}>{genre.name}</GenreItem>;
             })}
-          </ul>
+          </Genres>
         )}
-      </div>
-      <div>
+      </Info>
+      <AdditionalInfo>
         <h3>Additional information</h3>
-        <ul>
-          <li>
+        <SubMenu>
+          <SubMenuItem>
             <NavLink to="cast">Cast</NavLink>
-          </li>
-          <li>
+          </SubMenuItem>
+          <SubMenuItem>
             <NavLink to="reviews">Reviews</NavLink>
-          </li>
-        </ul>
+          </SubMenuItem>
+        </SubMenu>
         <Outlet />
-      </div>
-    </main>
+      </AdditionalInfo>
+    </Main>
   );
 };
 

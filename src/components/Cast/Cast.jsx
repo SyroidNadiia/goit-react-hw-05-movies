@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchCast } from './api/fetch';
-
+import { fetchCast } from '../api/fetch';
+import {
+  CastWrapper,
+  CastItem,
+  CastImage,
+  CastName,
+  CastCharacter,
+} from './Cast.styled';
 const Cast = () => {
   const [dataCast, setDataCast] = useState([]);
 
@@ -20,22 +26,22 @@ const Cast = () => {
   }, [movieId]);
 
   return (
-    <ul>
-          {dataCast.map(({id, name, character, profile_path}) => {
+    <CastWrapper>
+      {dataCast.map(({ id, name, character, profile_path }) => {
         return (
-          <li key={id}>
-            <img
+          <CastItem key={id}>
+            <CastImage
               src={`https://image.tmdb.org/t/p/original${profile_path}`}
               width="70"
               height="100"
               alt={name}
             />
-            <p>{name}</p>
-            <p>Character: {character}</p>
-          </li>
+            <CastName>{name}</CastName>
+            <CastCharacter>Character: {character}</CastCharacter>
+          </CastItem>
         );
       })}
-    </ul>
+    </CastWrapper>
   );
 };
 

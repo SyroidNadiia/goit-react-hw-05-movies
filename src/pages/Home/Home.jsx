@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchAsync } from 'components/api/fetch';
-import { Link } from 'react-router-dom';
+import { Container, Title, List, ListItem, StyledLink } from './Home.styled';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -19,18 +19,18 @@ const Home = () => {
   }, []);
 
   return (
-    <main>
-      <h1>Trendind today</h1>
-      <ul>
+    <Container>
+      <Title>Trendind today</Title>
+      <List>
         {movies.map(movie => {
           return (
-            <li key={movie.id}>
-              <Link to={`movies/${movie.id}`}>{movie.title}</Link>
-            </li>
+            <ListItem key={movie.id}>
+              <StyledLink to={`movies/${movie.id}`}>{movie.title}</StyledLink>
+            </ListItem>
           );
         })}
-      </ul>
-    </main>
+      </List>
+    </Container>
   );
 };
 

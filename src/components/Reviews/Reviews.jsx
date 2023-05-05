@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchReviews } from './api/fetch';
+import { fetchReviews } from '../api/fetch';
 
 const Reviews = () => {
   const [dataReviews, setDataReviews] = useState([]);
@@ -41,7 +41,7 @@ const Reviews = () => {
           })}
         </ul>
       ) : (
-        <p>There are no reviews</p>
+        <p>We dont have any reviews for this movie.</p>
       )}
     </>
   );
