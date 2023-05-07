@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchByQuery } from 'components/api/fetch';
-import SearchBox from 'components/SearchBox';
+import SearchBox from 'components/SearchBox/SearchBox';
 import MoviesList from 'components/MoviesList/MoviesList';
 import { Wrapper } from './Movies.styled';
 

@@ -3,20 +3,14 @@ import Movies from 'pages/Movies/Movies';
 import MovieDetails from 'pages/MovieDetails/MovieDetails';
 import Cast from './Cast/Cast';
 import Reviews from './Reviews/Reviews';
-import { NavLink, Link, Routes, Route } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
+import SharedLayout from 'components/SharedLayout/SharedLayout';
 
 const App = () => {
   return (
-    <div>
-      <header>
-        <nav>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/movies">Movies</NavLink>
-        </nav>
-      </header>
-
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route index element={<Home />}></Route>
         <Route path="/movies" element={<Movies />}></Route>
         <Route path="/movies/:movieId" element={<MovieDetails />}>
           <Route path="cast" element={<Cast />}></Route>
@@ -34,8 +28,8 @@ const App = () => {
         >
           NotFound this page
         </Route>
-      </Routes>
-    </div>
+      </Route>
+    </Routes>
   );
 };
 

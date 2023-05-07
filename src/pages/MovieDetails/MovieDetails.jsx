@@ -4,8 +4,10 @@ import { fetchMovieById } from 'components/api/fetch';
 import {
   Main,
   BackLink,
+  ContainerTitle,
   Image,
   Info,
+  Container,
   Title,
   ReleaseDate,
   Score,
@@ -15,6 +17,8 @@ import {
   AdditionalInfo,
   SubMenu,
   SubMenuItem,
+  Label,
+  GenresList,
 } from './MovieDetails.styled';
 
 const MovieDetails = () => {
@@ -49,26 +53,34 @@ const MovieDetails = () => {
   return (
     <Main>
       <BackLink to={backLinkHref}>Go back</BackLink>
-      <Image
-        src={`https://image.tmdb.org/t/p/original${poster_path}`}
-        width="200"
-        height="300"
-        alt={original_title}
-      />
-      <Info>
-        <Title>{title}</Title>
-        <ReleaseDate>{release_date}</ReleaseDate>
-        <Score>User Score: {vote_average}</Score>
-        <Overview>Overview: {overview}</Overview>
-        {genres && (
-          <Genres>
-            Genres:
-            {genres.map(genre => {
-              return <GenreItem key={genre.id}>{genre.name}</GenreItem>;
-            })}
-          </Genres>
-        )}
-      </Info>
+      <Container>
+        <Image
+          src={`https://image.tmdb.org/t/p/original${poster_path}`}
+          width="200"
+          height="300"
+          alt={original_title}
+        />
+        <Info>
+          <ContainerTitle>
+            <Title>{title}</Title>
+            <ReleaseDate>{release_date && `(${release_date.substring(0, 4)})`}</ReleaseDate>
+          </ContainerTitle>
+          <Score>User Score: {Math.round(vote_average * 10)}%</Score>
+          <Overview>
+            <Label>Overview</Label> {overview}
+          </Overview>
+          {genres && (
+            <Genres>
+              <Label>Genres:</Label>
+              <GenresList>
+                {genres.map(genre => {
+                  return <GenreItem key={genre.id}>{genre.name}</GenreItem>;
+                })}
+              </GenresList>
+            </Genres>
+          )}
+        </Info>
+      </Container>
       <AdditionalInfo>
         <h3>Additional information</h3>
         <SubMenu>

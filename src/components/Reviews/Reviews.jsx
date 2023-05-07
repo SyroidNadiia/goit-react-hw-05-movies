@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchReviews } from '../api/fetch';
+import { ReviewsContainer, ReviewItem, NoReviews } from './Reviews.styled';
 
 const Reviews = () => {
   const [dataReviews, setDataReviews] = useState([]);
@@ -21,12 +22,12 @@ const Reviews = () => {
   }, [movieId]);
 
   return (
-    <>
+    <ReviewsContainer>
       {dataReviews.length > 0 ? (
         <ul>
           {dataReviews.map(review => {
             return (
-              <li key={review.id}>
+              <ReviewItem key={review.id}>
                 <img
                   src={`https://image.tmdb.org/t/p/original${review.author_details.avatar_path}`}
                   width="70"
@@ -36,14 +37,14 @@ const Reviews = () => {
                 <p>{review.author}</p>
                 <p>{review.content}</p>
                 <p>{review.created_at}</p>
-              </li>
+              </ReviewItem>
             );
           })}
         </ul>
       ) : (
-        <p>We dont have any reviews for this movie.</p>
+        <NoReviews>We dont have any reviews for this movie.</NoReviews>
       )}
-    </>
+    </ReviewsContainer>
   );
 };
 export default Reviews;
