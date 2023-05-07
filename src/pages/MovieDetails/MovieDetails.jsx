@@ -1,5 +1,5 @@
 import { useLocation, useParams, NavLink, Outlet } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { fetchMovieById } from 'components/api/fetch';
 import {
   Main,
@@ -63,7 +63,9 @@ const MovieDetails = () => {
         <Info>
           <ContainerTitle>
             <Title>{title}</Title>
-            <ReleaseDate>{release_date && `(${release_date.substring(0, 4)})`}</ReleaseDate>
+            <ReleaseDate>
+              {release_date && `(${release_date.substring(0, 4)})`}
+            </ReleaseDate>
           </ContainerTitle>
           <Score>User Score: {Math.round(vote_average * 10)}%</Score>
           <Overview>
@@ -91,7 +93,9 @@ const MovieDetails = () => {
             <NavLink to="reviews">Reviews</NavLink>
           </SubMenuItem>
         </SubMenu>
-        <Outlet />
+        <Suspense fallback={<div>Loading</div>}>
+          <Outlet />
+        </Suspense>
       </AdditionalInfo>
     </Main>
   );

@@ -5,14 +5,10 @@ import {
   SearchButton,
 } from './SearchBox.styled';
 
-const SearchBox = ({ value, onChange, onClean }) => {
-  const handelSubmit = event => {
-    event.preventDefault();
-  };
-  
+const SearchBox = ({ value, onChange, onSubmit }) => {
   return (
     <SearchContainer>
-      <SearchForm onSubmit={handelSubmit}>
+      <SearchForm onSubmit={onSubmit}>
         <SearchInput
           value={value}
           onChange={onChange}
