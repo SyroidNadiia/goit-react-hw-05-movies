@@ -25,13 +25,19 @@ const Cast = () => {
     handelFetchCast(movieId);
   }, [movieId]);
 
+  const defaultImage = 'https://via.placeholder.com/200x300?text=No+Image';
+
   return (
     <CastWrapper>
       {dataCast.map(({ id, name, character, profile_path }) => {
         return (
           <CastItem key={id}>
             <CastImage
-              src={`https://image.tmdb.org/t/p/original${profile_path}`}
+              src={
+                profile_path
+                  ? `https://image.tmdb.org/t/p/original${profile_path}`
+                  : defaultImage
+              }
               width="70"
               height="100"
               alt={name}

@@ -7,44 +7,33 @@ import { Wrapper } from './Movies.styled';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [movieName, setMovieName] = useState(searchParams.get('name') || '');
   const [responseMovies, setResponseMovies] = useState([]);
-  const [searchClicked, setSearchClicked] = useState(false);
+
+  const query = searchParams.get('name');
 
   useEffect(() => {
     const handleFetchMoviesByQuery = async () => {
       try {
-        const { results } = await fetchByQuery(movieName);
+        const { results } = await fetchByQuery(query);
         setResponseMovies(results);
       } catch (error) {
         console.log(error);
       }
     };
-    if (searchClicked) {
-      handleFetchMoviesByQuery();
-      setSearchClicked(false);
+
+    if (query) {
+      handleFetchMoviesByQuery(query);
     }
-  }, [movieName, searchClicked]);
+  }, [query]);
 
-  const updateQueryString = event => {
-    const value = event.target.value.trim();
-    setMovieName(value);
-  };
-
-  const handleSearchSubmit = event => {
-    event.preventDefault();
-    setSearchClicked(true);
-    const nextParams = movieName !== '' ? { name: movieName } : {};
+  const handleSearchSubmit = value => {
+    const nextParams = value !== '' ? { name: value.trim() } : {};
     setSearchParams(nextParams);
   };
 
   return (
     <Wrapper>
-      <SearchBox
-        value={movieName}
-        onChange={updateQueryString}
-        onSubmit={handleSearchSubmit}
-      />
+      <SearchBox onSubmit={handleSearchSubmit} />
       <MoviesList movies={responseMovies} />
     </Wrapper>
   );

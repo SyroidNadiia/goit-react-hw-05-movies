@@ -9,7 +9,6 @@ const Home = () => {
     const handelFetchMovies = async () => {
       try {
         const { results } = await fetchAsync();
-        console.log(results);
         setMovies(results);
       } catch (error) {
         console.log(error);

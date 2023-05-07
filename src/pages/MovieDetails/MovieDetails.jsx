@@ -3,7 +3,6 @@ import { useState, useEffect, Suspense } from 'react';
 import { fetchMovieById } from 'components/api/fetch';
 import {
   Main,
-  BackLink,
   ContainerTitle,
   Image,
   Info,
@@ -20,10 +19,12 @@ import {
   Label,
   GenresList,
 } from './MovieDetails.styled';
+import Loader from 'components/Loader/Loader';
+import GoBackBtn from 'components/GoBackButton/GoBackButton';
 
 const MovieDetails = () => {
   const [dataMovie, setDataMovie] = useState({});
-
+  
   const { movieId } = useParams();
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const MovieDetails = () => {
         setDataMovie(response);
       } catch (error) {
         console.log(error);
-      }
+      } 
     };
     handelFetchMoviesById();
   }, [movieId]);
@@ -49,17 +50,24 @@ const MovieDetails = () => {
   } = dataMovie;
 
   const location = useLocation();
-  const backLinkHref = location.state?.from || '/';
+  const path = location?.state?.from ?? "/";
+  const defaultImage = 'https://via.placeholder.com/200x300?text=No+Image';
+
   return (
     <Main>
-      <BackLink to={backLinkHref}>Go back</BackLink>
+      <GoBackBtn path={path} />
       <Container>
         <Image
-          src={`https://image.tmdb.org/t/p/original${poster_path}`}
+          src={
+            poster_path
+              ? `https://image.tmdb.org/t/p/original${poster_path}`
+              : defaultImage
+          }
           width="200"
           height="300"
           alt={original_title}
         />
+
         <Info>
           <ContainerTitle>
             <Title>{title}</Title>
@@ -93,12 +101,11 @@ const MovieDetails = () => {
             <NavLink to="reviews">Reviews</NavLink>
           </SubMenuItem>
         </SubMenu>
-        <Suspense fallback={<div>Loading</div>}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </AdditionalInfo>
     </Main>
-  );
-};
+  );}
 
 export default MovieDetails;

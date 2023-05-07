@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   SearchContainer,
   SearchForm,
@@ -5,13 +6,21 @@ import {
   SearchButton,
 } from './SearchBox.styled';
 
-const SearchBox = ({ value, onChange, onSubmit }) => {
+const SearchBox = ({ onSubmit }) => {
+  const [searchText, setSearchText] = useState('');
+
+  const formSubmit = e => {
+  e.preventDefault();
+  onSubmit(searchText);
+  setSearchText('');
+};
+
   return (
     <SearchContainer>
-      <SearchForm onSubmit={onSubmit}>
+      <SearchForm onSubmit={formSubmit}>
         <SearchInput
-          value={value}
-          onChange={onChange}
+          value={searchText}
+          onChange={event => setSearchText(event.target.value)}
           type="text"
           autoComplete="off"
           autoFocus
