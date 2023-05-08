@@ -8,6 +8,7 @@ import {
   CastName,
   CastCharacter,
 } from './Cast.styled';
+
 const Cast = () => {
   const [dataCast, setDataCast] = useState([]);
 

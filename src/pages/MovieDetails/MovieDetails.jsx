@@ -1,6 +1,8 @@
-import { useLocation, useParams, NavLink, Outlet } from 'react-router-dom';
-import { useState, useEffect, Suspense } from 'react';
+import {  useParams, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { fetchMovieById } from 'components/api/fetch';
+import { IoIosArrowRoundBack } from 'react-icons/io';
+import { IconContext } from 'react-icons';
 import {
   Main,
   ContainerTitle,
@@ -24,8 +26,14 @@ import GoBackBtn from 'components/GoBackButton/GoBackButton';
 
 const MovieDetails = () => {
   const [dataMovie, setDataMovie] = useState({});
-  
-  const { movieId } = useParams();
+
+  const {
+    current: { movieId },
+  } = useRef(useParams('movieId'));
+
+  const location = useLocation();
+  const backLink = useRef(location.state?.from ?? '/');
+
 
   useEffect(() => {
     const handelFetchMoviesById = async () => {
@@ -34,7 +42,7 @@ const MovieDetails = () => {
         setDataMovie(response);
       } catch (error) {
         console.log(error);
-      } 
+      }
     };
     handelFetchMoviesById();
   }, [movieId]);
@@ -49,13 +57,15 @@ const MovieDetails = () => {
     genres,
   } = dataMovie;
 
-  const location = useLocation();
-  const path = location?.state?.from ?? "/";
   const defaultImage = 'https://via.placeholder.com/200x300?text=No+Image';
 
   return (
     <Main>
-      <GoBackBtn path={path} />
+      <IconContext.Provider value={{ size: '25px' }}>
+        <GoBackBtn to={backLink.current}>
+          {<IoIosArrowRoundBack />}Go back
+        </GoBackBtn>
+      </IconContext.Provider>
       <Container>
         <Image
           src={
@@ -95,10 +105,10 @@ const MovieDetails = () => {
         <h3>Additional information</h3>
         <SubMenu>
           <SubMenuItem>
-            <NavLink to="cast">Cast</NavLink>
+            <NavLink to={`/movies/${movieId}/cast`}>Cast</NavLink>
           </SubMenuItem>
           <SubMenuItem>
-            <NavLink to="reviews">Reviews</NavLink>
+            <NavLink to={`/movies/${movieId}/reviews`}>Reviews</NavLink>
           </SubMenuItem>
         </SubMenu>
         <Suspense fallback={<Loader />}>
@@ -106,6 +116,7 @@ const MovieDetails = () => {
         </Suspense>
       </AdditionalInfo>
     </Main>
-  );}
+  );
+};
 
 export default MovieDetails;

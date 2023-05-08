@@ -1,25 +1,23 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const List = styled.ul`
-  margin: 0;
+  margin-top: 20px;
   padding: 0;
   list-style: none;
 `;
 
 export const ListItem = styled.li`
   margin-bottom: 10px;
+  
 `;
 
 export const MovieLink = styled(Link)`
   display: block;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   text-decoration: none;
-  color: #333;
+  color: #000;
 
   &:hover {
-    background-color: #f9f9f9;
+    text-decoration: underline;
   }
 `;

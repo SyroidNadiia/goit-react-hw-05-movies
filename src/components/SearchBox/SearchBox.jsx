@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   SearchContainer,
   SearchForm,
@@ -32,3 +33,7 @@ const SearchBox = ({ onSubmit }) => {
 };
 
 export default SearchBox;
+
+SearchBox.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

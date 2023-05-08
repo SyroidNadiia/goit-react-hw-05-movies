@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchReviews } from '../api/fetch';
-import { ReviewsContainer, ReviewItem, NoReviews } from './Reviews.styled';
+import dateFormat from 'dateformat';
+import {
+  ReviewsContainer,
+  ReviewItem,
+  NoReviews,
+  ReviewAuthor,
+} from './Reviews.styled';
 
 const Reviews = () => {
   const [dataReviews, setDataReviews] = useState([]);
@@ -13,7 +19,6 @@ const Reviews = () => {
       try {
         const { results } = await fetchReviews(movieId);
         setDataReviews(results);
-        console.log(results);
       } catch (error) {
         console.log(error);
       }
@@ -28,9 +33,11 @@ const Reviews = () => {
           {dataReviews.map(review => {
             return (
               <ReviewItem key={review.id}>
-                <p>{review.author}</p>
+                <ReviewAuthor>{review.author}</ReviewAuthor>
                 <p>{review.content}</p>
-                <p>{review.created_at}</p>
+                <p>
+                  {dateFormat(review.created_at, 'paddedShortDate', true)}
+                </p>
               </ReviewItem>
             );
           })}

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ReviewsContainer = styled.div`
   display: flex;
@@ -21,11 +21,10 @@ export const ReviewItem = styled.li`
     border-radius: 50%;
     margin-bottom: 10px;
   }
+`;
 
-  p {
-    margin: 0;
-    text-align: center;
-  }
+export const ReviewAuthor = styled.p`
+  font-weight: 700;
 `;
 
 export const NoReviews = styled.p`
